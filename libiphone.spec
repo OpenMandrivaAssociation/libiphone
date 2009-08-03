@@ -7,9 +7,13 @@
 %define tarfile %{name}-%{version}-%{gitdate}.tar.bz2
 %define snapshot %{gitdate}git%{git_version}
 
+%define major 0
+%define libname %mklibname iphone %major
+%define develname %mklibname -d iphone
+
 Name:           libiphone
 Version:        0.1.0
-Release:        %{snapshot}.%mkrel 1
+Release:        %{snapshot}.%mkrel 2
 Summary:        Library for connecting to Apple iPhone and iPod touch
 
 Group:          System/Libraries
@@ -24,7 +28,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libusb-devel
 BuildRequires: libtasn1-devel
 BuildRequires: glib2-devel
-BuildRequires: gnutls-devel
+BuildRequires: gnutls-devel <= 2.7.0
 
 # Require these until a formal release
 BuildRequires: libtool
@@ -34,45 +38,50 @@ BuildRequires: autoconf
 %description
 libiphone is a library for connecting to Apple's iPhone or iPod touch devices
 
-%package devel
-Summary: Development package for libiphone
+%package -n %libname
 Group: System/Libraries
-Requires: libiphone = %{version}-%{release}
-Requires: pkgconfig
+Summary: Library for connecting to Apple iPhone and iPod touch
+Requires: %name >= %version-%release
 
-%description devel
+%description -n %libname
+libiphone is a library for connecting to Apple's iPhone or iPod touch devices
+
+%package -n %develname
+Summary: Development package for libiphone
+Group: Development/C
+Requires: %libname = %{version}-%{release}
+Provides: %name-devel = %{version}-%{release}
+
+%description -n %develname
 Files for development with libiphone.
 
 %prep
 %setup -q
 %patch0 -p0 -b .fixgnutlsver
+./autogen.sh
 
 %build
-./autogen.sh
 %configure2_5x --disable-static
 %make
 
 %install
 rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
-rm $RPM_BUILD_ROOT%{_libdir}/libiphone.la
+%makeinstall_std
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
 %files
-%defattr(-,root,root,-)
-%doc AUTHORS COPYING.LESSER README
+%doc AUTHORS README
 %{_bindir}/libiphone-initconf
-%{_libdir}/libiphone.so.0
-%{_libdir}/libiphone.so.0.0.0
 %{_datadir}/hal/fdi/information/20thirdparty/31-apple-mobile-device.fdi
 
-%files devel
+%files -n %libname
+%defattr(-,root,root,-)
+%{_libdir}/libiphone.so.%{major}*
+
+%files -n %develname
 %defattr(-,root,root,-)
 %{_libdir}/pkgconfig/libiphone-1.0.pc
 %{_libdir}/libiphone.so
