@@ -61,13 +61,12 @@ Python bindings for libiphone.
 %patch0 -p0 -b .wformat
 
 %build
-%configure2_5x --disable-static
+%configure2_5x
 %make
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %makeinstall_std
-rm $RPM_BUILD_ROOT%{_libdir}/libiphone.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -95,6 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %{_libdir}/pkgconfig/libiphone-1.0.pc
 %{_libdir}/libiphone.so
+%{_libdir}/libiphone*a
 %{_includedir}/libiphone
 
 %files -n python-iphone
