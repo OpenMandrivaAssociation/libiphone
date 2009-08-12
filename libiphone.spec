@@ -1,13 +1,12 @@
 %define name libiphone
 %define version 0.9.3
-%define release %mkrel 0
 %define major 0
 %define libname %mklibname iphone %major
 %define libnamedev %mklibname -d iphone
 
 Name:           libiphone
 Version:        0.9.3
-Release:        %mkrel 0
+Release:        %mkrel 1
 Summary:        Library for connecting to Apple iPhone and iPod touch
 
 Group:          System/Libraries
@@ -58,7 +57,7 @@ Python bindings for libiphone.
 
 %prep
 %setup -q
-%patch0 -p0 -b .wformat
+%patch0 -p1 -b .wformat
 
 %build
 %configure2_5x
