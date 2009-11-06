@@ -1,12 +1,12 @@
 %define name libiphone
-%define version 0.9.3
+%define version 0.9.4
 %define major 0
 %define libname %mklibname iphone %major
 %define libnamedev %mklibname -d iphone
 
 Name:           libiphone
-Version:        0.9.3
-Release:        %mkrel 2
+Version:        %{version}
+Release:        %mkrel 0.1
 Summary:        Library for connecting to Apple iPhone and iPod touch
 
 Group:          System/Libraries
@@ -14,7 +14,6 @@ License:        LGPLv2+
 URL:            http://matt.colyer.name/projects/iphone-linux/
 
 Source0:        http://cloud.github.com/downloads/MattColyer/%{name}/%{name}-%{version}.tar.bz2
-Patch0:         libiphone-wformat.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 
@@ -24,7 +23,6 @@ BuildRequires: usbmuxd-devel >= 0.1.4
 BuildRequires: glib2-devel
 BuildRequires: gnutls-devel
 BuildRequires: python-devel
-BuildRequires: swig
 
 %description
 libiphone is a library for connecting to Apple's iPhone or iPod touch devices
@@ -49,6 +47,8 @@ Files for development with libiphone.
 %package -n python-iphone
 Summary: Python bindings for libiphone
 Group: Development/Python
+BuildRequires: swig
+BuildRequires: libplist++-devel
 %py_requires -d
 
 
@@ -57,18 +57,17 @@ Python bindings for libiphone.
 
 %prep
 %setup -q
-%patch0 -p1 -b .wformat
 
 %build
 %configure2_5x
 %make
 
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 %makeinstall_std
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %if %mdkversion < 200900
 %post -n %libname -p /sbin/ldconfig
