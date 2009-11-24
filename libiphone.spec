@@ -1,12 +1,12 @@
 %define name libiphone
-%define version 0.9.4
+%define version 0.9.5
 %define major 0
 %define libname %mklibname iphone %major
 %define libnamedev %mklibname -d iphone
 
 Name:           libiphone
 Version:        %{version}
-Release:        %mkrel 0.1
+Release:        %mkrel 1
 Summary:        Library for connecting to Apple iPhone and iPod touch
 
 Group:          System/Libraries
@@ -14,6 +14,7 @@ License:        LGPLv2+
 URL:            http://matt.colyer.name/projects/iphone-linux/
 
 Source0:        http://cloud.github.com/downloads/MattColyer/%{name}/%{name}-%{version}.tar.bz2
+Patch0:	        libiphone-0.9.5-fix-underlinking.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 
@@ -57,6 +58,8 @@ Python bindings for libiphone.
 
 %prep
 %setup -q
+%patch0 -p1
+autoreconf -fi
 
 %build
 %configure2_5x
@@ -97,4 +100,4 @@ rm -rf %{buildroot}
 
 %files -n python-iphone
 %defattr(-,root,root,-)
-%{python_sitearch}/libiphone/
+%{python_sitearch}/iphone/
