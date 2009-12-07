@@ -6,7 +6,7 @@
 
 Name:           libiphone
 Version:        %{version}
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        Library for connecting to Apple iPhone and iPod touch
 
 Group:          System/Libraries
