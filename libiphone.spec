@@ -11,7 +11,7 @@ Summary:        Library for connecting to Apple iPhone and iPod touch
 
 Group:          System/Libraries
 License:        LGPLv2+
-URL:            http://matt.colyer.name/projects/iphone-linux/
+URL:            https://matt.colyer.name/projects/iphone-linux/
 
 Source0:        http://cloud.github.com/downloads/MattColyer/%{name}/%{name}-%{version}.tar.bz2
 Patch0:	        libiphone-0.9.5-fix-underlinking.patch
