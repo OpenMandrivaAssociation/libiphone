@@ -18,6 +18,11 @@ Patch0:	        libiphone-0.9.5-fix-underlinking.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires: libtasn1-devel
 BuildRequires: libplist-devel
 BuildRequires: usbmuxd-devel >= 0.1.4
